@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Habit Tracker 🚀</title>
+  <style>
+    /* Import Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    /* Apply global styles */
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+        overflow: hidden;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    /* Fade-in animation */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* Floating background circles */
+    body::before {
+        content: "";
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        top: 10%;
+        left: 10%;
+        animation: float 6s infinite alternate ease-in-out;
+    }
+    body::after {
+        content: "";
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 50%;
+        bottom: 10%;
+        right: 15%;
+        animation: float 8s infinite alternate ease-in-out;
+    }
+
+    @keyframes float {
+        from { transform: translateY(-20px); }
+        to { transform: translateY(20px); }
+    }
+
+    /* Container styling */
+    .container {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        padding: 2.5rem;
+        max-width: 500px;
+        width: 90%;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Title styling */
+    .title {
+        font-size: 2.8rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Subtitle styling */
+    .subtitle {
+        font-size: 1.3rem;
+        color: #555;
+        margin-bottom: 1.8rem;
+    }
+
+    /* Button container */
+    .buttons {
+        margin-top: 1.5rem;
+    }
+
+    /* Buttons */
+    .btn {
+        display: inline-block;
+        padding: 0.75rem 1.8rem;
+        margin: 0 0.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Sign-in button */
+    .btn-signin {
+        background: #ff7eb3;
+    }
+    .btn-signin:hover {
+        background: #ff5e92;
+        transform: translateY(-2px);
+    }
+
+    /* Sign-up button */
+    .btn-signup {
+        background: #6e8efb;
+    }
+    .btn-signup:hover {
+        background: #5a75e3;
+        transform: translateY(-2px);
+    }
+
+    /* Responsive design */
+    @media (max-width: 600px) {
+        .container {
+            width: 95%;
+            padding: 2rem;
+        }
+        .title {
+            font-size: 2.2rem;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+        }
+        .btn {
+            padding: 0.6rem 1.5rem;
+            font-size: 1rem;
+        }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Habit Tracker 🚀</h1>
+    <p class="subtitle">Track your habits, achieve your goals, and become your best self! 💪🎯</p>
+    <div class="buttons">
+      <a href="{% url 'login' %}" class="btn btn-signin">Sign In</a>
+      <a href="{% url 'signup' %}" class="btn btn-signup">Sign Up</a>
+    </div>
+  </div>
+</body>
+</html>

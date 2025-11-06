@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Habit Tracker</title>
+  <!-- Link to your external login.css -->
+  <link rel="stylesheet" href="{% static 'login.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h1>Login</h1>
+    
+    <form method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      <!-- Custom loop over fields so we can rename 'username' to 'Email' -->
+      {% for field in form %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">
+            {% if field.name == 'username' %}
+              Email
+            {% elif field.name == 'password' %}
+              Password
+            {% else %}
+              {{ field.label }}
+            {% endif %}
+          </label>
+          {{ field }}
+
+          <!-- Display field-specific error messages -->
+          {% if field.errors %}
+            <ul class="errorlist">
+              {% for error in field.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="login-btn">Sign In</button>
+    </form>
+
+    <p class="signup-redirect">
+      Don't have an account?
+      <a href="{% url 'signup' %}">Sign up</a>
+    </p>
+    <p class="forgot-password">
+      <a href="{% url 'password_reset' %}">Forgot your password?</a>
+    </p>
+    
+  </div>
+</body>
+</html>

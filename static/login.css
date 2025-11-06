@@ -1,0 +1,117 @@
+/* login.css (example) */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 350px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.container h1 {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: #333;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 0.7rem;
+  background-color: #6e8efb;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #5a75e3;
+}
+
+.signup-redirect {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.signup-redirect a {
+  color: #6e8efb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signup-redirect a:hover {
+  text-decoration: underline;
+}
+
+.errorlist {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style-type: none;
+  color: #d9534f;
+  font-size: 0.9rem;
+}
+
+.forgot-password {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.forgot-password a {
+  color: #6a1b9a; /* A rich purple */
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.forgot-password a:hover {
+  color: #8e24aa; /* Slightly lighter purple */
+  text-decoration: underline;
+}

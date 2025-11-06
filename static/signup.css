@@ -1,0 +1,155 @@
+/* signup.css */
+
+/* Optional Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+.container h1 {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+/* Form layout */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  width: 100%;
+  position: relative; /* Allows absolutely positioned .password-rules */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.required-asterisk {
+  color: red;
+  margin-left: 2px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+/* Error messages */
+.errorlist {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style-type: none;
+  color: #d9534f;
+  font-size: 0.9rem;
+}
+
+/* Password rules box: absolutely positioned so it doesn't push content */
+.password-rules {
+  display: none; /* hidden until shown via JS or :focus rule */
+  position: absolute;
+  top: 0;
+  left: calc(100% + 10px); /* place to the right of the input */
+  width: 220px;
+  background-color: #f9f9f9;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: left;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  z-index: 10; /* ensure it appears above other elements */
+}
+
+.password-rules p {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.password-rules ul {
+  list-style: none;
+  padding-left: 1.2rem; /* indent for checkmarks */
+  margin: 0;
+}
+
+.password-rules li {
+  margin-bottom: 0.3rem;
+}
+
+/* Submit button */
+.submit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #6e8efb;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #5a75e3;
+}
+
+/* "Already have an account?" */
+.already-acc {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.already-acc a {
+  color: #6e8efb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.already-acc a:hover {
+  text-decoration: underline;
+}

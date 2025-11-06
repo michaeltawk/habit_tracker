@@ -1,0 +1,605 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Cache control meta tags -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Habits</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" 
+    rel="stylesheet"
+  >
+
+  <!-- Font Awesome for icons -->
+  <link 
+    rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" 
+    crossorigin="anonymous" 
+    referrerpolicy="no-referrer"
+  />
+
+  <style>
+    /* GLOBAL RESET & BODY */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(120deg, #6a85f7, #d783ff);
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    /* TOP BAR (Sign Out) */
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+    .signout-btn {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      border: 2px solid #ff5f5f;
+      background: #ff5f5f;
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+    .signout-btn:hover {
+      background-color: transparent;
+      color: #ff5f5f;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 2rem auto;
+      text-align: center;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      padding: 2rem;
+    }
+    h1 {
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      font-size: 2rem;
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+
+    /* HABITS LIST */
+    .habits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+    .habit-row {
+      display: grid;
+      grid-template-columns: 200px 300px 200px auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.15);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+    .habit-row:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .col-name,
+    .col-hours,
+    .col-total,
+    .col-delete {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: #fff;
+      font-weight: 500;
+    }
+    .col-name { font-weight: 600; }
+
+    /* Indicator styling */
+    .indicator {
+      display: inline-block;
+      width: 0.8rem;
+      height: 0.8rem;
+      border-radius: 50%;
+      margin-right: 0.4rem;
+      vertical-align: middle;
+    }
+    .zero {
+      background-color: #ff4d4d;
+      animation: flicker 1s infinite alternate;
+    }
+    .nonzero {
+      background-color: #34d399;
+    }
+    @keyframes flicker {
+      0% { opacity: 1; }
+      100% { opacity: 0.3; }
+    }
+
+    /* Clickable Hours styling */
+    .col-hours {
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 6px;
+      background-color: rgba(255,255,255,0.1);
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .col-hours:hover {
+      background-color: rgba(255,255,255,0.25);
+      color: #ffe66d;
+    }
+
+    /* Delete button styling */
+    .col-delete {
+      justify-content: flex-end;
+      padding-right: 1rem;
+    }
+    .btn-delete {
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0.5rem 0.9rem;
+      color: #fff;
+      background-color: #ff4d4d;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .btn-delete:hover {
+      background-color: #ff1c1c;
+      transform: translateY(-2px);
+    }
+
+    .actions {
+      margin-top: 2rem;
+    }
+    .add-habit-link {
+      display: inline-block;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      border: 2px solid #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+    .add-habit-link:hover {
+      background-color: #fff;
+      color: #d83cff;
+      border-color: #d83cff;
+    }
+
+    /* MODAL STYLES */
+    .modal {
+      display: none; 
+      position: fixed;
+      z-index: 999;
+      left: 0; 
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 8% auto;
+      padding: 1.5rem;
+      border-radius: 12px;
+      width: 400px;
+      text-align: center;
+      animation: fadeIn 0.3s ease;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal-content h2 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: #333;
+    }
+    .modal p {
+      margin: 1rem 0;
+      color: #333;
+      font-size: 1rem;
+    }
+    .modal-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    .confirm-btn,
+    .cancel-btn {
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+    .confirm-btn:hover,
+    .cancel-btn:hover {
+      transform: translateY(-2px);
+    }
+    .confirm-btn {
+      background-color: #dc3545;
+    }
+    .confirm-btn:hover {
+      background-color: #c82333;
+    }
+    .cancel-btn {
+      background-color: #6c757d;
+    }
+    .cancel-btn:hover {
+      background-color: #5a6268;
+    }
+    .modal-form input {
+      display: block;
+      width: 100%;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    /* RESPONSIVE MEDIA QUERIES */
+    @media (max-width: 992px) {
+      .habit-row {
+        grid-template-columns: 150px 1fr 150px auto;
+      }
+    }
+    @media (max-width: 768px) {
+      .habit-row {
+        grid-template-columns: 1fr;
+        text-align: left;
+      }
+      .col-name, .col-hours, .col-total, .col-delete {
+        justify-content: flex-start;
+        margin: 0.4rem 0;
+      }
+      .col-delete {
+        padding-right: 0;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      .add-habit-link {
+        width: 100%;
+        text-align: center;
+        padding: 0.8rem;
+      }
+    }
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-color: #f1f1f1;
+      border: 1px solid #ccc;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+    }
+
+    select:hover {
+      border-color: #999;
+    }
+
+    select:focus {
+      border-color: #6a85f7;
+      box-shadow: 0 0 0 3px rgba(106, 133, 247, 0.2);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Top bar with Sign Out -->
+  <div class="top-bar">
+    <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: inline;">
+      {% csrf_token %}
+      <button type="submit" class="signout-btn">Sign Out</button>
+    </form>
+  </div>
+
+  <div class="container">
+    <h1>My Habits</h1>
+
+    {% if habits %}
+      <div class="habits-list">
+        {% for habit in habits %}
+          <div class="habit-row">
+            <!-- Column 1: Name -->
+            <div class="col-name">
+              {{ habit.name }}
+            </div>
+            <!-- Column 2: Day Hours (clickable) -->
+            <div 
+              class="col-hours"
+              data-habit-id="{{ habit.pk }}"
+              data-habit-name="{{ habit.name|escapejs }}"
+              data-habit-hours="{{ habit.hours_spent }}"
+              onclick="handleDayHoursClick(this)"
+            >
+              <span class="indicator {% if habit.hours_spent == 0 %} zero {% else %} nonzero {% endif %}"></span>
+              Hours spent: {{ habit.hours_spent }}
+            </div>
+            <!-- Column 3: Total hours -->
+            <div class="col-total">
+              Total Hours Logged: {{ habit.total }}
+            </div>
+            <!-- Column 4: Delete (trash icon) -->
+            <div class="col-delete">
+              <button
+                class="btn-delete"
+                data-habit-id="{{ habit.pk }}"
+                data-habit-name="{{ habit.name|escapejs }}"
+              >
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="no-habits">You haven't added any habits yet.</p>
+    {% endif %}
+
+    <div class="actions">
+      <!-- Instead of linking to a separate page, we open the modal -->
+      <a href="javascript:void(0)" onclick="openAddHabitModal()" class="add-habit-link">
+        Add a New Habit
+      </a>
+    </div>
+  </div>
+
+  <!-- DELETE MODAL -->
+  <div id="deleteModal" class="modal">
+    <div class="modal-content">
+      <h2>Delete Habit</h2>
+      <p id="deleteMessage"></p>
+      <form id="deleteForm" method="POST" action="">
+        {% csrf_token %}
+        <div class="modal-buttons">
+          <button type="submit" class="confirm-btn">Yes, Delete</button>
+          <button type="button" class="cancel-btn" id="cancelDeleteBtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- EDIT MODAL -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <h2>Edit Habit</h2>
+      <form id="editForm" method="POST" class="modal-form">
+        {% csrf_token %}
+        <input type="text" name="name" id="editName" placeholder="Habit Name" required>
+
+        <label>Time Spent</label>
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+          <select name="hours" id="editHoursDropdown" required>
+            <option value="">Hours</option>
+            {% for h in hours_range %}<option value="{{ h }}">{{ h }}</option>{% endfor %}
+          </select>
+          <select name="minutes" id="editMinutesDropdown" required>
+            <option value="">Minutes</option>
+            {% for m in minutes_range %}<option value="{{ m }}">{{ m }}</option>{% endfor %}
+          </select>
+        </div>
+
+        <input type="hidden" name="hours_spent" id="editTotal" />
+
+        <div class="modal-buttons">
+          <button type="submit" class="confirm-btn">Save</button>
+          <button type="button" class="cancel-btn" id="cancelEditBtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD HABIT MODAL -->
+  <div id="addHabitModal" class="modal">
+    <div class="modal-content">
+      <h2>Add a New Habit</h2>
+      <form id="addHabitForm" method="POST" action="{% url 'add_habit' %}" class="modal-form">
+        {% csrf_token %}
+        <label for="habitName">Name</label>
+        <input type="text" name="name" id="habitName" placeholder="Enter habit name" required />
+  
+        <label>Time Spent</label>
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+          <select name="hours" id="addHabitHours" required>
+            <option value="">Hours</option>
+            {% for h in hours_range %}<option value="{{ h }}">{{ h }}</option>{% endfor %}
+          </select>
+          <select name="minutes" id="addHabitMinutes" required>
+            <option value="">Minutes</option>
+            {% for m in minutes_range %}<option value="{{ m }}">{{ m }}</option>{% endfor %}
+          </select>
+        </div>
+        <input type="hidden" name="hours_spent" id="addHabitTotal" />
+  
+        <div class="modal-buttons">
+          <button type="submit" class="confirm-btn">Add</button>
+          <button type="button" class="cancel-btn" onclick="closeAddHabitModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD HOURS MODAL -->
+  <div id="addHoursModal" class="modal">
+    <div class="modal-content">
+      <h2>Add Hours</h2>
+      <p id="addHoursMessage"></p>
+      <form id="addHoursForm" method="POST" class="modal-form">
+        {% csrf_token %}
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+          <select name="hours" id="addHoursHours" required>
+            <option value="">Hours</option>
+            {% for h in hours_range %}<option value="{{ h }}">{{ h }}</option>{% endfor %}
+          </select>
+          <select name="minutes" id="addHoursMinutes" required>
+            <option value="">Minutes</option>
+            {% for m in minutes_range %}<option value="{{ m }}">{{ m }}</option>{% endfor %}
+          </select>
+        </div>
+        <input type="hidden" name="hours_spent" id="addHoursTotal" />
+  
+        <div class="modal-buttons">
+          <button type="submit" class="confirm-btn">Add</button>
+          <button type="button" class="cancel-btn" onclick="closeAddHoursModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Handle Hours/Edit/Delete modals as before
+    function handleDayHoursClick(el) {
+      const habitId = el.dataset.habitId;
+      const habitName = el.dataset.habitName;
+      const habitHours = parseFloat(el.dataset.habitHours) || 0;
+      if (habitHours === 0) {
+        openAddHoursModal(habitId, habitName);
+      } else {
+        openEditModal(habitId, habitName, habitHours);
+      }
+    }
+
+    document.querySelectorAll('.btn-delete').forEach(button => {
+      button.addEventListener('click', () => {
+        const habitId = button.dataset.habitId;
+        const habitName = button.dataset.habitName;
+        openDeleteModal(habitId, habitName);
+      });
+    });
+    function openDeleteModal(habitId, habitName) {
+      document.getElementById('deleteMessage').textContent =
+        `Are you sure you want to delete "${habitName}"?`;
+      const deleteForm = document.getElementById('deleteForm');
+      deleteForm.action = "/habits/" + habitId + "/delete/";
+      document.getElementById('deleteModal').style.display = 'block';
+    }
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').style.display = 'none';
+    }
+    document.getElementById('cancelDeleteBtn').addEventListener('click', closeDeleteModal);
+    window.addEventListener('click', event => {
+      if (event.target === document.getElementById('deleteModal')) {
+        closeDeleteModal();
+      }
+    });
+
+    function openEditModal(habitId, habitName, habitHours) {
+      document.getElementById('editName').value = habitName;
+
+      const totalMinutes = Math.round(habitHours * 60);
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+
+      document.getElementById('editHoursDropdown').value = hours;
+      document.getElementById('editMinutesDropdown').value = minutes;
+
+      const editForm = document.getElementById('editForm');
+      editForm.action = "/habits/" + habitId + "/edit/";
+      document.getElementById('editModal').style.display = 'block';
+    }
+    function closeEditModal() {
+      document.getElementById('editModal').style.display = 'none';
+    }
+    document.getElementById('cancelEditBtn').addEventListener('click', closeEditModal);
+    window.addEventListener('click', event => {
+      if (event.target === document.getElementById('editModal')) {
+        closeEditModal();
+      }
+    });
+
+    function openAddHoursModal(habitId, habitName) {
+      document.getElementById('addHoursMessage').textContent =
+        `How many hours do you want to add to "${habitName}"?`;
+      const addHoursForm = document.getElementById('addHoursForm');
+      addHoursForm.action = "/habits/" + habitId + "/add_hours/";
+      document.getElementById('addHoursModal').style.display = 'block';
+    }
+    function closeAddHoursModal() {
+      document.getElementById('addHoursModal').style.display = 'none';
+    }
+    document.getElementById('cancelAddBtn').addEventListener('click', closeAddHoursModal);
+    window.addEventListener('click', event => {
+      if (event.target === document.getElementById('addHoursModal')) {
+        closeAddHoursModal();
+      }
+    });
+
+    function openAddHabitModal() {
+      document.getElementById('addHabitModal').style.display = 'block';
+    }
+    function closeAddHabitModal() {
+      document.getElementById('addHabitModal').style.display = 'none';
+    }
+    window.addEventListener('click', (event) => {
+      const modal = document.getElementById('addHabitModal');
+      if (event.target === modal) {
+        closeAddHabitModal();
+      }
+    });
+    function attachDecimalConversion(formId, hourId, minuteId, targetId) {
+      const form = document.getElementById(formId);
+      if (!form) return;
+
+      form.addEventListener("submit", function (e) {
+        const hours = parseInt(document.getElementById(hourId)?.value || 0);
+        const minutes = parseInt(document.getElementById(minuteId)?.value || 0);
+
+        if (hours > 24 || minutes > 59) {
+          alert("Please enter a valid time (Max 24 hours, 59 minutes).");
+          e.preventDefault();
+          return;
+        }
+
+        const total = (hours + minutes / 60).toFixed(2);
+        document.getElementById(targetId).value = total;
+      });
+    }
+
+    attachDecimalConversion("addHabitForm", "addHabitHours", "addHabitMinutes", "addHabitTotal");
+    attachDecimalConversion("addHoursForm", "addHoursHours", "addHoursMinutes", "addHoursTotal");
+    attachDecimalConversion("editForm", "editHoursDropdown", "editMinutesDropdown", "editTotal");
+  </script>
+</body>
+</html>
